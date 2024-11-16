@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+# import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +39,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    
+    # 'bootstrap5',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -47,14 +58,39 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = "farmbiz.urls"
 
+SITE_ID = 1
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', 
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+# Allauth configuration
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_USERNAME_REQUIRED = True
+# LOGIN_REDIRECT_URL = "/" 
+LOGOUT_REDIRECT_URL = "/account/login/"
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/account/login/'
+
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.CustomSignupForm',
+}
+
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -69,6 +105,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "farmbiz.wsgi.application"
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"  # or your email provider's SMTP server
+EMAIL_PORT = 587  # Commonly used port for TLS
+EMAIL_USE_TLS = True  # Use TLS for security
+EMAIL_HOST_USER = "interllectualsys@gmail.com"  # Your email address
+EMAIL_HOST_PASSWORD = "ihqlkqjqzrctggtb"  # Your email password
+DEFAULT_FROM_EMAIL = "interllectualsys@gmail.com"  # Your email address
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -115,7 +161,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
