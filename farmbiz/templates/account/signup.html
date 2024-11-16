@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .signup-container {
+            max-width: 500px;
+            margin: auto;
+            margin-top: 50px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .signup-header {
+            font-weight: bold;
+            color: #495057;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+        .text-danger {
+            font-size: 0.9rem;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2 class="signup-header">Create an Account</h2>
+        
+        <!-- Signup Form -->
+        <form method="POST" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="id_username" name="username" maxlength="150" required>
+                {% if form.username.errors %}
+                    <div class="text-danger">
+                        {{ form.username.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="id_email" name="email" required>
+                {% if form.email.errors %}
+                    <div class="text-danger">
+                        {{ form.email.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- First Name -->
+            <div class="mb-3">
+                <label for="id_first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="id_first_name" name="first_name" maxlength="30" required>
+                {% if form.first_name.errors %}
+                    <div class="text-danger">
+                        {{ form.first_name.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Last Name -->
+            <div class="mb-3">
+                <label for="id_last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="id_last_name" name="last_name" maxlength="30" required>
+                {% if form.last_name.errors %}
+                    <div class="text-danger">
+                        {{ form.last_name.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Phone Number -->
+            <div class="mb-3">
+                <label for="id_phone_no" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="id_phone_no" name="phone_no" maxlength="15" required>
+                {% if form.phone_no.errors %}
+                    <div class="text-danger">
+                        {{ form.phone_no.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="id_password1" name="password1" required>
+                {% if form.password1.errors %}
+                    <div class="text-danger">
+                        {{ form.password1.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Confirm Password -->
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="id_password2" name="password2" required>
+                {% if form.password2.errors %}
+                    <div class="text-danger">
+                        {{ form.password2.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- User Type -->
+            <div class="mb-3">
+                <label for="id_user_type" class="form-label">User Type</label>
+                <select class="form-select" id="id_user_type" name="user_type" required>
+                    <option value="">Select User Type</option>
+                    <option value="admin">Admin</option>
+                    <option value="farmer">Farmer</option>
+                    <option value="business_owner">Business Owner</option>
+                </select>
+                {% if form.user_type.errors %}
+                    <div class="text-danger">
+                        {{ form.user_type.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+            
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+        
+        <div class="footer">
+            Already have an account? <a href="{% url 'account_login' %}">Log In</a>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

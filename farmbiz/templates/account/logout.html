@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Out</title>
+
+    <!-- CSS for Sign Out Page -->
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Typography */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f8fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Centering the container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 0 20px;
+        }
+
+        /* Signout Box */
+        .signout-box {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        /* Heading */
+        .signout-box h1 {
+            font-size: 28px;
+            color: #007bff;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Paragraph */
+        .signout-box p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        /* Button container (grouping action buttons) */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        /* Primary Button */
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        /* Primary Button Style */
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Secondary Button Style */
+        .btn-secondary {
+            background-color: #f1f3f5;
+            color: #007bff;
+            border: 2px solid #007bff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        /* Input (hidden) */
+        input[type="hidden"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="signout-box">
+            <h1>Sign Out</h1>
+            <p>Are you sure you want to sign out?</p>
+
+            <form method="POST" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ redirect_field }}">
+
+                <div class="button-container">
+                    <button type="submit" class="btn btn-primary">Yes, Sign Out</button>
+                    {% comment %} <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a> {% endcomment %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
